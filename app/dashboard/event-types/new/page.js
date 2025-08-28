@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { ArrowLeft, Save, Calendar, Plus, Trash2, Video, Link } from 'lucide-react'
+import { ArrowLeft, Save, Calendar, Plus, Trash2, Video, Link as LinkIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import DashboardLayout from '@/components/dashboard-layout'
 import Link from 'next/link'
@@ -326,7 +326,7 @@ export default function NewEventTypePage() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <Link className="h-4 w-4 text-gray-500" />
+                        <LinkIcon className="h-4 w-4 text-gray-500" />
                         <Label className="text-sm font-medium text-gray-700">Google Meet</Label>
                       </div>
                       <Switch

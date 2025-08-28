@@ -5,7 +5,12 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "seed": "node scripts/seed-database.js",
+    "test": "node scripts/test-features.js",
+    "test:db": "node scripts/test-features.js",
+    "check": "node scripts/check-app.js",
+    "status": "node scripts/status.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
