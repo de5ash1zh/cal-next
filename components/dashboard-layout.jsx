@@ -71,9 +71,9 @@ export default function DashboardLayout({ children }) {
     <div className="min-h-screen bg-gray-50">
       {/* Mobile sidebar */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="w-72 p-0">
+        <SheetContent side="left" className="w-full sm:w-80 p-0">
           <div className="flex h-full flex-col bg-white">
-            <div className="flex h-16 items-center justify-between px-6 border-b border-gray-100">
+            <div className="flex h-16 items-center justify-between px-4 sm:px-6 border-b border-gray-100">
               <h1 className="text-xl font-semibold text-gray-900">Cal</h1>
               <Button
                 variant="ghost"
@@ -84,7 +84,7 @@ export default function DashboardLayout({ children }) {
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            <nav className="flex-1 space-y-1 px-3 py-6">
+            <nav className="flex-1 space-y-1 px-3 py-4 sm:py-6">
               {navigation.map((item) => {
                 const isActive = pathname === item.href
                 return (
@@ -92,21 +92,21 @@ export default function DashboardLayout({ children }) {
                     key={item.name}
                     href={item.href}
                     onClick={() => setSidebarOpen(false)}
-                    className={`group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                    className={`group flex items-center px-3 py-3 sm:py-2.5 text-sm font-medium rounded-lg transition-colors ${
                       isActive
                         ? 'bg-gray-100 text-gray-900 border-r-2 border-gray-900'
                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }`}
                   >
-                    <item.icon className="mr-3 h-5 w-5" />
-                    {item.name}
+                    <item.icon className="mr-3 h-5 w-5 flex-shrink-0" />
+                    <span className="truncate">{item.name}</span>
                   </Link>
                 )
               })}
             </nav>
             <div className="border-t border-gray-100 p-4">
               <div className="flex items-center space-x-3 mb-4">
-                <Avatar className="h-9 w-9">
+                <Avatar className="h-9 w-9 flex-shrink-0">
                   <AvatarImage src={session?.user?.image} />
                   <AvatarFallback className="bg-gray-100 text-gray-700">
                     {session?.user?.name?.charAt(0) || 'U'}
@@ -205,11 +205,12 @@ export default function DashboardLayout({ children }) {
 
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             <div className="flex flex-1"></div>
-            <div className="flex items-center gap-x-4 lg:gap-x-6">
+            <div className="flex items-center gap-x-2 sm:gap-x-4 lg:gap-x-6">
               <Link href="/dashboard/event-types/new">
-                <Button size="sm" className="bg-gray-900 hover:bg-gray-800 text-white">
+                <Button size="sm" className="bg-gray-900 hover:bg-gray-800 text-white shadow-sm">
                   <Plus className="mr-2 h-4 w-4" />
-                  New Event Type
+                  <span className="hidden sm:inline">New Event Type</span>
+                  <span className="sm:hidden">New</span>
                 </Button>
               </Link>
             </div>
@@ -217,8 +218,8 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Page content */}
-        <main className="py-8">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="py-4 sm:py-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 sm:px-6 lg:px-8">
             {children}
           </div>
         </main>

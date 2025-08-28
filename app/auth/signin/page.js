@@ -1,54 +1,60 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { toast } from 'sonner'
-import { ArrowLeft, Mail, Lock, Calendar } from 'lucide-react'
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
+import { ArrowLeft, Mail, Lock, Calendar } from "lucide-react";
 
 export default function SignInPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
-      })
+      });
 
       if (result?.error) {
-        toast.error('Invalid email or password')
+        toast.error("Invalid email or password");
       } else {
-        toast.success('Signed in successfully')
-        router.push('/dashboard')
+        toast.success("Signed in successfully");
+        router.push("/dashboard");
       }
     } catch (error) {
-      toast.error('An error occurred during sign in')
+      toast.error("An error occurred during sign in");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleGoogleSignIn = async () => {
     try {
-      await signIn('google', { callbackUrl: '/dashboard' })
+      await signIn("google", { callbackUrl: "/dashboard" });
     } catch (error) {
-      toast.error('An error occurred during Google sign in')
+      toast.error("An error occurred during Google sign in");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -56,7 +62,10 @@ export default function SignInPage() {
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
-            <Link href="/" className="flex items-center space-x-2 text-gray-900 hover:text-gray-700">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 text-gray-900 hover:text-gray-700"
+            >
               <ArrowLeft className="h-4 w-4" />
               <span className="text-sm font-medium">Back to home</span>
             </Link>
@@ -80,7 +89,10 @@ export default function SignInPage() {
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="email"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Email address
                   </Label>
                   <div className="relative">
@@ -98,7 +110,10 @@ export default function SignInPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="password"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Password
                   </Label>
                   <div className="relative">
@@ -115,12 +130,12 @@ export default function SignInPage() {
                   </div>
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gray-900 hover:bg-gray-800 text-white py-2.5"
+                <Button
+                  type="submit"
+                  className="w-full bg-gray-900 hover:bg-gray-800 text-white py-2.5 shadow-sm"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Signing in...' : 'Sign in'}
+                  {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
               </form>
 
@@ -130,7 +145,9 @@ export default function SignInPage() {
                     <Separator className="w-full" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                    <span className="bg-white px-2 text-gray-500">
+                      Or continue with
+                    </span>
                   </div>
                 </div>
 
@@ -164,8 +181,11 @@ export default function SignInPage() {
 
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600">
-                  Don't have an account?{' '}
-                  <Link href="/auth/signup" className="font-medium text-gray-900 hover:text-gray-700">
+                  Don't have an account?{" "}
+                  <Link
+                    href="/auth/signup"
+                    className="font-medium text-gray-900 hover:text-gray-700"
+                  >
                     Sign up
                   </Link>
                 </p>
@@ -175,5 +195,5 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

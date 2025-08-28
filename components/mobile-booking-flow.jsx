@@ -431,7 +431,7 @@ export default function MobileBookingFlow({ eventType, onBookingComplete }) {
       onTouchEnd={handleTouchEnd}
     >
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="bg-white border-b border-gray-200 px-3 sm:px-4 py-3">
         <div className="flex items-center justify-between">
           <button
             onClick={prevStep}
@@ -441,9 +441,9 @@ export default function MobileBookingFlow({ eventType, onBookingComplete }) {
             <ChevronLeft className="h-5 w-5 text-gray-600" />
           </button>
           
-          <div className="text-center">
-            <h1 className="text-lg font-semibold text-gray-900">{steps[currentStep].title}</h1>
-            <p className="text-sm text-gray-500">Step {currentStep + 1} of {steps.length}</p>
+          <div className="text-center flex-1 px-2">
+            <h1 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{steps[currentStep].title}</h1>
+            <p className="text-xs sm:text-sm text-gray-500">Step {currentStep + 1} of {steps.length}</p>
           </div>
 
           <button
@@ -465,39 +465,46 @@ export default function MobileBookingFlow({ eventType, onBookingComplete }) {
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         <Card className="border-gray-200 shadow-sm">
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             {renderStepContent()}
           </CardContent>
         </Card>
 
         {/* Navigation */}
-        <div className="flex space-x-3 mt-6">
+        <div className="flex space-x-3 mt-4 sm:mt-6">
           {currentStep > 0 && (
             <Button
               variant="outline"
               onClick={prevStep}
-              className="flex-1 border-gray-200 text-gray-700 hover:bg-gray-50"
+              className="flex-1 border-gray-200 text-gray-700 hover:bg-gray-50 text-sm sm:text-base"
             >
-              Previous
+              <span className="hidden sm:inline">Previous</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           )}
           
           {currentStep < steps.length - 1 ? (
             <Button
               onClick={nextStep}
-              className="flex-1 bg-gray-900 hover:bg-gray-800 text-white"
+              className="flex-1 bg-gray-900 hover:bg-gray-800 text-white text-sm sm:text-base"
             >
-              Next
+              <span className="hidden sm:inline">Next</span>
+              <span className="sm:hidden">Next</span>
             </Button>
           ) : (
             <Button
               onClick={handleSubmit}
               disabled={isLoading}
-              className="flex-1 bg-gray-900 hover:bg-gray-800 text-white"
+              className="flex-1 bg-gray-900 hover:bg-gray-800 text-white text-sm sm:text-base"
             >
-              {isLoading ? 'Confirming...' : 'Confirm Booking'}
+              {isLoading ? 'Confirming...' : (
+                <>
+                  <span className="hidden sm:inline">Confirm Booking</span>
+                  <span className="sm:hidden">Confirm</span>
+                </>
+              )}
             </Button>
           )}
         </div>

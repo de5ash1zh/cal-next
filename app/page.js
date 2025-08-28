@@ -44,7 +44,7 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link href="/auth/signup">
-                <Button className="bg-gray-900 hover:bg-gray-800 text-white">
+                <Button className="bg-gray-900 hover:bg-gray-800 text-white shadow-sm">
                   Get Started
                 </Button>
               </Link>
@@ -70,7 +70,7 @@ export default function HomePage() {
               <Link href="/auth/signup">
                 <Button
                   size="lg"
-                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 text-lg"
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 text-lg shadow-sm"
                 >
                   Start for free
                   <ArrowRight className="ml-2 h-5 w-5" />

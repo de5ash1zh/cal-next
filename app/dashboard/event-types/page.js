@@ -148,15 +148,15 @@ export default function EventTypesPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Event Types</h1>
             <p className="text-gray-600 mt-2">Manage your event types and availability</p>
           </div>
           <Link href="/dashboard/event-types/new">
-            <Button className="bg-gray-900 hover:bg-gray-800 text-white">
+            <Button className="bg-gray-900 hover:bg-gray-800 text-white shadow-sm">
               <Plus className="mr-2 h-4 w-4" />
               New Event Type
             </Button>
@@ -181,7 +181,7 @@ export default function EventTypesPage() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {eventTypes.map((eventType) => (
               <Card key={eventType.id} className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                 <CardHeader className="pb-4">

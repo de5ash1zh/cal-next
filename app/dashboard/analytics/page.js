@@ -73,9 +73,9 @@ export default function AnalyticsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
             <p className="text-gray-600 mt-2">Track your booking performance and insights</p>
@@ -92,7 +92,7 @@ export default function AnalyticsPage() {
                 <SelectItem value="365">Last year</SelectItem>
               </SelectContent>
             </Select>
-            <Button onClick={fetchAnalytics} variant="outline">
+            <Button onClick={fetchAnalytics} variant="outline" className="border-gray-200 text-gray-700 hover:bg-gray-50">
               <Activity className="mr-2 h-4 w-4" />
               Refresh
             </Button>
@@ -100,8 +100,8 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="border-gray-200 shadow-sm">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Total Bookings</CardTitle>
               <Calendar className="h-4 w-4 text-gray-400" />
@@ -114,7 +114,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Confirmed</CardTitle>
               <Clock className="h-4 w-4 text-gray-400" />
@@ -127,7 +127,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Revenue</CardTitle>
               <TrendingUp className="h-4 w-4 text-gray-400" />
@@ -140,7 +140,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Conversion Rate</CardTitle>
               <BarChart3 className="h-4 w-4 text-gray-400" />
@@ -155,9 +155,9 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Detailed Analytics */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
           {/* Top Event Types */}
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg text-gray-900">Top Event Types</CardTitle>
               <CardDescription className="text-gray-600">Most popular event types by bookings</CardDescription>
@@ -192,7 +192,7 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Booking Status Breakdown */}
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg text-gray-900">Booking Status</CardTitle>
               <CardDescription className="text-gray-600">Breakdown of booking statuses</CardDescription>
@@ -243,7 +243,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Performance Metrics */}
-        <Card className="border-gray-200 shadow-sm">
+        <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="text-lg text-gray-900">Performance Metrics</CardTitle>
             <CardDescription className="text-gray-600">Key performance indicators</CardDescription>

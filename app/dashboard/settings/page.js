@@ -167,15 +167,15 @@ export default function SettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Header */}
-        <div>
+        <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
           <p className="text-gray-600 mt-2">Manage your account and preferences</p>
         </div>
 
         {/* Profile Settings */}
-        <Card className="border-gray-200 shadow-sm">
+        <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="text-lg text-gray-900">Profile Information</CardTitle>
             <CardDescription className="text-gray-600">
@@ -184,7 +184,7 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleProfileUpdate} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium text-gray-700">
                     Full Name *
@@ -223,7 +223,7 @@ export default function SettingsPage() {
                     <Input
                       id="email"
                       type="email"
-                      value={profileData.email}
+                      value={profileData.name}
                       onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
                       className="pl-10 border-gray-200 focus:border-gray-900 focus:ring-gray-900"
                       required
@@ -267,7 +267,7 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <Button type="submit" disabled={isLoading} className="bg-gray-900 hover:bg-gray-800 text-white">
+              <Button type="submit" disabled={isLoading} className="bg-gray-900 hover:bg-gray-800 text-white shadow-sm">
                 <Save className="mr-2 h-4 w-4" />
                 {isLoading ? 'Updating...' : 'Update Profile'}
               </Button>
@@ -276,7 +276,7 @@ export default function SettingsPage() {
         </Card>
 
         {/* Password Settings */}
-        <Card className="border-gray-200 shadow-sm">
+        <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="text-lg text-gray-900">Change Password</CardTitle>
             <CardDescription className="text-gray-600">
@@ -302,7 +302,7 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="newPassword" className="text-sm font-medium text-gray-700">
                     New Password *
@@ -332,7 +332,7 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <Button type="submit" disabled={isLoading} className="bg-gray-900 hover:bg-gray-800 text-white">
+              <Button type="submit" disabled={isLoading} className="bg-gray-900 hover:bg-gray-800 text-white shadow-sm">
                 <Lock className="mr-2 h-4 w-4" />
                 {isLoading ? 'Updating...' : 'Change Password'}
               </Button>
@@ -341,7 +341,7 @@ export default function SettingsPage() {
         </Card>
 
         {/* Notification Settings */}
-        <Card className="border-gray-200 shadow-sm">
+        <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="text-lg text-gray-900">Notification Preferences</CardTitle>
             <CardDescription className="text-gray-600">

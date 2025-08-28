@@ -1,64 +1,64 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent } from '@/components/ui/card'
-import { toast } from 'sonner'
-import { ArrowLeft, User, Mail, Lock, Calendar, Check } from 'lucide-react'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
+import { ArrowLeft, User, Mail, Lock, Calendar, Check } from "lucide-react";
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: ''
-  })
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
+      [name]: value,
+    }));
 
     // Auto-generate slug from title
-    if (name === 'name') {
+    if (name === "name") {
       const username = value
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '')
-      setFormData(prev => ({ ...prev, username }))
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+      setFormData((prev) => ({ ...prev, username }));
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match')
-      return
+      toast.error("Passwords do not match");
+      return;
     }
 
     if (formData.password.length < 6) {
-      toast.error('Password must be at least 6 characters long')
-      return
+      toast.error("Password must be at least 6 characters long");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
@@ -66,22 +66,22 @@ export default function SignUpPage() {
           username: formData.username,
           password: formData.password,
         }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.ok) {
-        toast.success('Account created successfully! Please sign in.')
-        router.push('/auth/signin')
+        toast.success("Account created successfully! Please sign in.");
+        router.push("/auth/signin");
       } else {
-        toast.error(data.error || 'Failed to create account')
+        toast.error(data.error || "Failed to create account");
       }
     } catch (error) {
-      toast.error('An error occurred during registration')
+      toast.error("An error occurred during registration");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -89,7 +89,10 @@ export default function SignUpPage() {
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
-            <Link href="/" className="flex items-center space-x-2 text-gray-900 hover:text-gray-700">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 text-gray-900 hover:text-gray-700"
+            >
               <ArrowLeft className="h-4 w-4" />
               <span className="text-sm font-medium">Back to home</span>
             </Link>
@@ -105,7 +108,9 @@ export default function SignUpPage() {
             <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mx-auto mb-4">
               <Calendar className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Create your account
+            </h1>
             <p className="text-gray-600 mt-2">Get started with Cal</p>
           </div>
 
@@ -113,7 +118,10 @@ export default function SignUpPage() {
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="name"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Full name
                   </Label>
                   <div className="relative">
@@ -130,9 +138,12 @@ export default function SignUpPage() {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="email"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Email address
                   </Label>
                   <div className="relative">
@@ -151,7 +162,10 @@ export default function SignUpPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="username" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="username"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Username
                   </Label>
                   <div className="relative">
@@ -173,7 +187,10 @@ export default function SignUpPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="password"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Password
                   </Label>
                   <div className="relative">
@@ -192,7 +209,10 @@ export default function SignUpPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                  <Label
+                    htmlFor="confirmPassword"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Confirm password
                   </Label>
                   <div className="relative">
@@ -210,19 +230,22 @@ export default function SignUpPage() {
                   </div>
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gray-900 hover:bg-gray-800 text-white py-2.5"
+                <Button
+                  type="submit"
+                  className="w-full bg-gray-900 hover:bg-gray-800 text-white py-2.5 shadow-sm"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Creating account...' : 'Create account'}
+                  {isLoading ? "Creating account..." : "Create account"}
                 </Button>
               </form>
 
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600">
-                  Already have an account?{' '}
-                  <Link href="/auth/signin" className="font-medium text-gray-900 hover:text-gray-700">
+                  Already have an account?{" "}
+                  <Link
+                    href="/auth/signin"
+                    className="font-medium text-gray-900 hover:text-gray-700"
+                  >
                     Sign in
                   </Link>
                 </p>
@@ -232,5 +255,5 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

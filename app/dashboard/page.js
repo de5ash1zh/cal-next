@@ -85,16 +85,16 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Header */}
-        <div>
+        <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600 mt-2">Welcome back, {session?.user?.name}!</p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="border-gray-200 shadow-sm">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Total Bookings</CardTitle>
               <Calendar className="h-4 w-4 text-gray-400" />
@@ -107,7 +107,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Upcoming</CardTitle>
               <Clock className="h-4 w-4 text-gray-400" />
@@ -120,7 +120,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Event Types</CardTitle>
               <Users className="h-4 w-4 text-gray-400" />
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <CardTitle className="text-sm font-medium text-gray-600">Conversion Rate</CardTitle>
               <TrendingUp className="h-4 w-4 text-gray-400" />
@@ -150,16 +150,16 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions & Recent Bookings */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3">
           {/* Quick Actions */}
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg text-gray-900">Quick Actions</CardTitle>
               <CardDescription className="text-gray-600">Get started quickly</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <Link href="/dashboard/event-types/new">
-                <Button className="w-full justify-start bg-gray-900 hover:bg-gray-800 text-white">
+                <Button className="w-full justify-start bg-gray-900 hover:bg-gray-800 text-white shadow-sm">
                   <Plus className="mr-2 h-4 w-4" />
                   Create Event Type
                 </Button>
@@ -180,7 +180,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Recent Bookings */}
-          <Card className="border-gray-200 shadow-sm lg:col-span-2">
+          <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow lg:col-span-2">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-lg text-gray-900">Recent Bookings</CardTitle>

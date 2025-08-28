@@ -190,15 +190,15 @@ export default function AvailabilityPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Header */}
-        <div>
+        <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Availability</h1>
           <p className="text-gray-600 mt-2">Set your weekly schedule and blocked times</p>
         </div>
 
         {/* Weekly Schedule */}
-        <Card className="border-gray-200 shadow-sm">
+        <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="text-lg text-gray-900">Weekly Schedule</CardTitle>
             <CardDescription className="text-gray-600">
@@ -256,7 +256,7 @@ export default function AvailabilityPage() {
         </Card>
 
         {/* Blocked Times */}
-        <Card className="border-gray-200 shadow-sm">
+        <Card className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -267,7 +267,7 @@ export default function AvailabilityPage() {
               </div>
               <Button
                 onClick={() => setShowAddBlocked(true)}
-                className="bg-gray-900 hover:bg-gray-800 text-white"
+                className="bg-gray-900 hover:bg-gray-800 text-white shadow-sm"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Blocked Time
