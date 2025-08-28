@@ -9,7 +9,19 @@ const eventTypeSchema = z.object({
   description: z.string().optional(),
   duration: z.number().min(1, 'Duration must be at least 1 minute'),
   price: z.number().min(0, 'Price cannot be negative').optional(),
-  color: z.string().regex(/^#[0-9A-F]{6}$/i, 'Color must be a valid hex color').optional(),
+  isActive: z.boolean().default(true),
+  color: z.string().default('#6b7280'),
+  zoomMeeting: z.boolean().default(false),
+  googleMeet: z.boolean().default(false),
+  zoomUrl: z.string().optional(),
+  googleMeetUrl: z.string().optional(),
+  customFields: z.array(z.object({
+    name: z.string().min(1, 'Field name is required'),
+    type: z.enum(['TEXT', 'TEXTAREA', 'SELECT', 'RADIO', 'CHECKBOX', 'NUMBER', 'EMAIL', 'PHONE', 'DATE', 'TIME']),
+    required: z.boolean().default(false),
+    options: z.string().optional(),
+    order: z.number().default(0)
+  })).optional()
 })
 
 export async function GET(request) {
@@ -26,6 +38,13 @@ export async function GET(request) {
     const eventTypes = await prisma.eventType.findMany({
       where: {
         userId: session.user.id
+      },
+      include: {
+        customFields: {
+          orderBy: {
+            order: 'asc'
+          }
+        }
       },
       orderBy: {
         createdAt: 'desc'
@@ -56,7 +75,7 @@ export async function POST(request) {
     const body = await request.json()
     const validatedData = eventTypeSchema.parse(body)
 
-    // Check if slug already exists for this user
+    // Check if slug is unique for this user
     const existingEventType = await prisma.eventType.findFirst({
       where: {
         userId: session.user.id,
@@ -71,10 +90,38 @@ export async function POST(request) {
       )
     }
 
+    // Create event type with custom fields
     const eventType = await prisma.eventType.create({
       data: {
-        ...validatedData,
-        userId: session.user.id
+        title: validatedData.title,
+        slug: validatedData.slug,
+        description: validatedData.description,
+        duration: validatedData.duration,
+        price: validatedData.price || 0,
+        isActive: validatedData.isActive,
+        color: validatedData.color,
+        zoomMeeting: validatedData.zoomMeeting,
+        googleMeet: validatedData.googleMeet,
+        zoomUrl: validatedData.zoomUrl,
+        googleMeetUrl: validatedData.googleMeetUrl,
+        userId: session.user.id,
+        customFields: {
+          create: validatedData.customFields?.map((field, index) => ({
+            name: field.name,
+            type: field.type,
+            required: field.required,
+            options: field.options,
+            order: field.order || index,
+            userId: session.user.id
+          })) || []
+        }
+      },
+      include: {
+        customFields: {
+          orderBy: {
+            order: 'asc'
+          }
+        }
       }
     })
 

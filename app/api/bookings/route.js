@@ -6,13 +6,17 @@ import { z } from 'zod'
 const bookingSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
-  startTime: z.string().datetime('Invalid start time'),
-  endTime: z.string().datetime('Invalid end time'),
+  startTime: z.string().datetime('Start time must be a valid date'),
+  endTime: z.string().datetime('End time must be a valid date'),
   attendeeName: z.string().min(1, 'Attendee name is required'),
-  attendeeEmail: z.string().email('Invalid attendee email'),
+  attendeeEmail: z.string().email('Valid email is required'),
   attendeePhone: z.string().optional(),
   notes: z.string().optional(),
   eventTypeId: z.string().min(1, 'Event type is required'),
+  customFieldValues: z.array(z.object({
+    customFieldId: z.string(),
+    value: z.string()
+  })).optional()
 })
 
 export async function GET(request) {
@@ -55,13 +59,24 @@ export async function GET(request) {
         eventType: {
           select: {
             title: true,
-            color: true,
-            duration: true
+            duration: true,
+            price: true,
+            color: true
+          }
+        },
+        customFieldValues: {
+          include: {
+            customField: {
+              select: {
+                name: true,
+                type: true
+              }
+            }
           }
         }
       },
       orderBy: {
-        startTime: 'asc'
+        startTime: 'desc'
       }
     })
 
@@ -89,18 +104,17 @@ export async function POST(request) {
     const body = await request.json()
     const validatedData = bookingSchema.parse(body)
 
-    // Verify event type exists and belongs to user
+    // Verify event type exists and belongs to the user
     const eventType = await prisma.eventType.findFirst({
       where: {
         id: validatedData.eventTypeId,
-        userId: session.user.id,
-        isActive: true
+        userId: session.user.id
       }
     })
 
     if (!eventType) {
       return NextResponse.json(
-        { error: 'Event type not found or inactive' },
+        { error: 'Event type not found' },
         { status: 404 }
       )
     }
@@ -109,20 +123,21 @@ export async function POST(request) {
     const conflictingBooking = await prisma.booking.findFirst({
       where: {
         userId: session.user.id,
+        eventTypeId: validatedData.eventTypeId,
         status: {
-          not: 'CANCELLED'
+          notIn: ['CANCELLED']
         },
         OR: [
           {
             startTime: {
-              lt: new Date(validatedData.endTime),
-              gte: new Date(validatedData.startTime)
+              lt: validatedData.endTime,
+              gte: validatedData.startTime
             }
           },
           {
             endTime: {
-              gt: new Date(validatedData.startTime),
-              lte: new Date(validatedData.endTime)
+              gt: validatedData.startTime,
+              lte: validatedData.endTime
             }
           }
         ]
@@ -136,18 +151,59 @@ export async function POST(request) {
       )
     }
 
+    // Generate meeting links if configured
+    let zoomUrl = null
+    let googleMeetUrl = null
+
+    if (eventType.zoomMeeting && eventType.zoomUrl) {
+      const meetingId = Math.random().toString(36).substring(2, 15)
+      zoomUrl = eventType.zoomUrl.replace('{meetingId}', meetingId)
+    }
+
+    if (eventType.googleMeet && eventType.googleMeetUrl) {
+      const meetingId = Math.random().toString(36).substring(2, 15)
+      googleMeetUrl = eventType.googleMeetUrl.replace('{meetingId}', meetingId)
+    }
+
+    // Create booking with custom fields
     const booking = await prisma.booking.create({
       data: {
-        ...validatedData,
+        title: validatedData.title,
+        description: validatedData.description,
+        startTime: validatedData.startTime,
+        endTime: validatedData.endTime,
+        attendeeName: validatedData.attendeeName,
+        attendeeEmail: validatedData.attendeeEmail,
+        attendeePhone: validatedData.attendeePhone,
+        notes: validatedData.notes,
+        eventTypeId: validatedData.eventTypeId,
         userId: session.user.id,
-        startTime: new Date(validatedData.startTime),
-        endTime: new Date(validatedData.endTime)
+        zoomUrl,
+        googleMeetUrl,
+        customFieldValues: {
+          create: validatedData.customFieldValues?.map(field => ({
+            value: field.value,
+            customFieldId: field.customFieldId
+          })) || []
+        }
       },
       include: {
         eventType: {
           select: {
             title: true,
+            duration: true,
+            price: true,
             color: true
+          }
+        },
+        customFieldValues: {
+          include: {
+            customField: {
+              select: {
+                name: true,
+                type: true
+              }
+            }
           }
         }
       }
@@ -166,6 +222,6 @@ export async function POST(request) {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
-      )
+    )
   }
 }

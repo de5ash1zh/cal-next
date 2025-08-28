@@ -140,7 +140,7 @@ export default function EventTypesPage() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-900 border-t-transparent"></div>
         </div>
       </DashboardLayout>
     )
@@ -148,15 +148,15 @@ export default function EventTypesPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Event Types</h1>
-            <p className="text-gray-600">Manage your event types and availability</p>
+            <h1 className="text-3xl font-bold text-gray-900">Event Types</h1>
+            <p className="text-gray-600 mt-2">Manage your event types and availability</p>
           </div>
           <Link href="/dashboard/event-types/new">
-            <Button>
+            <Button className="bg-gray-900 hover:bg-gray-800 text-white">
               <Plus className="mr-2 h-4 w-4" />
               New Event Type
             </Button>
@@ -165,42 +165,40 @@ export default function EventTypesPage() {
 
         {/* Event Types Grid */}
         {eventTypes.length === 0 ? (
-          <Card>
-            <CardContent className="text-center py-12">
-              <Calendar className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No event types</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Get started by creating your first event type.
+          <Card className="border-gray-200 shadow-sm">
+            <CardContent className="text-center py-16">
+              <Calendar className="mx-auto h-16 w-16 text-gray-400 mb-6" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No event types</h3>
+              <p className="text-gray-600 mb-6 max-w-sm mx-auto">
+                Get started by creating your first event type. This will allow others to book time with you.
               </p>
-              <div className="mt-6">
-                <Link href="/dashboard/event-types/new">
-                  <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    New Event Type
-                  </Button>
-                </Link>
-              </div>
+              <Link href="/dashboard/event-types/new">
+                <Button className="bg-gray-900 hover:bg-gray-800 text-white">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create Event Type
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {eventTypes.map((eventType) => (
-              <Card key={eventType.id} className="relative">
-                <CardHeader className="pb-3">
+              <Card key={eventType.id} className="border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <CardTitle className="text-lg">{eventType.title}</CardTitle>
-                      <CardDescription className="mt-1">
+                      <CardTitle className="text-lg text-gray-900 mb-2">{eventType.title}</CardTitle>
+                      <CardDescription className="text-gray-600">
                         {eventType.description || 'No description'}
                       </CardDescription>
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
+                      <DropdownMenuContent align="end" className="w-48">
                         <DropdownMenuItem onClick={() => copyBookingLink('username', eventType.slug)}>
                           <Copy className="mr-2 h-4 w-4" />
                           Copy link
@@ -217,7 +215,7 @@ export default function EventTypesPage() {
                         </Link>
                         <DropdownMenuItem 
                           onClick={() => deleteEventType(eventType.id)}
-                          className="text-red-600"
+                          className="text-red-600 focus:text-red-600"
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
                           Delete
@@ -234,31 +232,31 @@ export default function EventTypesPage() {
                         {eventType.duration} minutes
                       </span>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3">
                       <Switch
                         checked={eventType.isActive}
                         onCheckedChange={() => toggleEventTypeStatus(eventType.id, eventType.isActive)}
                       />
-                      <Badge variant={eventType.isActive ? "default" : "secondary"}>
+                      <Badge variant={eventType.isActive ? "default" : "secondary"} className="text-xs">
                         {eventType.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </div>
                   </div>
 
                   {eventType.price && eventType.price > 0 && (
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between py-2 border-t border-gray-100">
                       <span className="text-sm text-gray-600">Price:</span>
-                      <span className="font-medium">${eventType.price}</span>
+                      <span className="font-medium text-gray-900">${eventType.price}</span>
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between pt-2 border-t">
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                     <div 
-                      className="w-4 h-4 rounded-full"
+                      className="w-4 h-4 rounded-full border border-gray-200"
                       style={{ backgroundColor: eventType.color }}
                     />
                     <Link href={`/${'username'}/${eventType.slug}`} target="_blank">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="border-gray-200 text-gray-700 hover:bg-gray-50">
                         <ExternalLink className="mr-2 h-4 w-4" />
                         View
                       </Button>
